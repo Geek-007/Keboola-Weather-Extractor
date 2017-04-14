@@ -53,6 +53,7 @@ def getHistoricWeatherValues(city='Prague',start_time='2017-01-01 12:00:00',end_
     allFrames['city'] = city
     allFrames['lat'] = COOR_DICT[city]['lat']
     allFrames['lon'] = COOR_DICT[city]['lon']
+    return allFrames
 
 def concatWeatherFrames(list_of_frames):
     concatFrame = pd.concat(list_of_frames)
