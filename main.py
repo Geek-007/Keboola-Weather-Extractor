@@ -19,22 +19,23 @@ COOR_DICT = {"Prague":{"lat":'50.0755381',"lon":'14.43780049999998'},
 #timestamped = pd.to_datetime('2017-04-07 12:00:00',utc=True)
 def generateUrl(city='Prague',desired_time='current'):
     global SECRET_KEY
-    if desired_time == 'current':
-        desired_time = np.int64(time.time())
-    else:
-        pass
-    
     TOKEN = SECRET_KEY
     URL_PREFIX = 'https://api.darksky.net/forecast/'
-    URL_PARAMS = {
+    URL_SUFFIX = '?exclude=currently,flags&lang=cs&units=auto'
+    if desired_time == 'current':
+        URL_PARAMS = {
             "lat":COOR_DICT[city]['lat'],
             "lon":COOR_DICT[city]['lon'],
-            "time":str(desired_time)
             }
-    URL_SUFFIX = '?exclude=currently,flags&lang=cs&units=auto'
-    
-    return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+','+URL_PARAMS['time']+URL_SUFFIX
-
+        return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+','+URL_SUFFIX
+    else:
+        URL_PARAMS = {
+                "lat":COOR_DICT[city]['lat'],
+                "lon":COOR_DICT[city]['lon'],
+                "time":str(desired_time)
+                }
+        return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+','+URL_PARAMS['time']+URL_SUFFIX
+      
 # For all timestamps in the desiredDataRange
 
 def getHistoricWeatherValues(city='Prague',start_time='2017-01-01 12:00:00',end_time='2017-01-01 12:00:00'):
@@ -57,7 +58,7 @@ def getHistoricWeatherValues(city='Prague',start_time='2017-01-01 12:00:00',end_
 
 def concatWeatherFrames(list_of_frames):
     concatFrame = pd.concat(list_of_frames)
-    concatFrame.drop_duplicates(subset=['time','city'])
+    concatFrame.drop_duplicates(subset=['time','city'],inplace=True)
     return concatFrame
 
 # main function
