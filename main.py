@@ -28,7 +28,7 @@ def generateUrl(city='Prague',desired_time='current'):
             "lon":COOR_DICT[city]['lon'],
             }
         URL_SUFFIX = '?exclude=flags&lang=cs&units=auto'
-        return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+','+URL_SUFFIX
+        return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+URL_SUFFIX
     else:
         URL_PARAMS = {
                 "lat":COOR_DICT[city]['lat'],
