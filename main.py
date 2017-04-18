@@ -39,8 +39,12 @@ def generateUrl(city='Prague',desired_time='current'):
 # For all timestamps in the desiredDataRange
 
 def getHistoricWeatherValues(city='Prague',start_time='2017-01-01 12:00:00',end_time='2017-01-01 12:00:00'):
-    desiredDataRange = pd.date_range(start_time,end_time)
-    desiredDataRangeUNIX = desiredDataRange.astype(np.int64) // 10**9
+    if start_time == 'current':
+        desiredDataRangeUNIX = ['current']
+    else:
+        desiredDataRange = pd.date_range(start_time,end_time)
+        desiredDataRangeUNIX = desiredDataRange.astype(np.int64) // 10**9
+    
     frameList = []
     for record in desiredDataRangeUNIX:
         desiredURL = generateUrl(city,desired_time=record)
