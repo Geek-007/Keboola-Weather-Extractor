@@ -21,12 +21,13 @@ def generateUrl(city='Prague',desired_time='current'):
     global SECRET_KEY
     TOKEN = SECRET_KEY
     URL_PREFIX = 'https://api.darksky.net/forecast/'
-    URL_SUFFIX = '?exclude=currently,flags&lang=cs&units=auto'
+    
     if desired_time == 'current':
         URL_PARAMS = {
             "lat":COOR_DICT[city]['lat'],
             "lon":COOR_DICT[city]['lon'],
             }
+        URL_SUFFIX = '?exclude=flags&lang=cs&units=auto'
         return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+','+URL_SUFFIX
     else:
         URL_PARAMS = {
@@ -34,6 +35,7 @@ def generateUrl(city='Prague',desired_time='current'):
                 "lon":COOR_DICT[city]['lon'],
                 "time":str(desired_time)
                 }
+        URL_SUFFIX = '?exclude=currently,flags&lang=cs&units=auto'
         return URL_PREFIX+TOKEN+'/'+URL_PARAMS['lat']+','+URL_PARAMS['lon']+','+URL_PARAMS['time']+URL_SUFFIX
       
 # For all timestamps in the desiredDataRange
