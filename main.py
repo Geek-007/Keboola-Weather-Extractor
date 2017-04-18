@@ -70,7 +70,10 @@ def concatWeatherFrames(list_of_frames):
 # main function
 if __name__ == '__main__': 
     """ IMPORT """
-    weatherFrame = pd.read_csv('in/tables/weatherTable.csv')
+    try:
+        weatherFrame = pd.read_csv('in/tables/weatherTable.csv')
+    except FileNotFoundError:
+        weatherFrame = None
     cfg = docker.Config()
     parameters = cfg.get_parameters()
     LIST_OF_CITIES = parameters.get('listOfCities')
