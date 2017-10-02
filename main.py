@@ -70,10 +70,6 @@ def concatWeatherFrames(list_of_frames):
 # main function
 if __name__ == '__main__': 
     """ IMPORT """
-    try:
-        weatherFrame = pd.read_csv('in/tables/weatherTable.csv')
-    except FileNotFoundError:
-        weatherFrame = None
     cfg = docker.Config()
     parameters = cfg.get_parameters()
     LIST_OF_CITIES = parameters.get('listOfCities')
@@ -84,7 +80,7 @@ if __name__ == '__main__':
     
     """ PROCESS """
     #requestCounter = 0
-    outputWeatherFrameList = [weatherFrame]
+    outputWeatherFrameList = []
     for city in LIST_OF_CITIES:
         outputWeatherFrameList.append(getHistoricWeatherValues(city=city,start_time=FROM_TIME,end_time=TO_TIME))
     outputWeatherFrame = concatWeatherFrames(outputWeatherFrameList) 
